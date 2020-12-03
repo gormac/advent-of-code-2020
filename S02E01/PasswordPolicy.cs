@@ -4,22 +4,19 @@ namespace S02E01
 {
     internal class PasswordPolicy
     {
-        public int MaxOccurrences { get; }
-        public int MinOccurrences { get; }
+        public int FirstOccurrenceIndex { get; }
+        public int SecondOccurrenceIndex { get; }
         public char Character { get; }
 
         internal PasswordPolicy(string passwordLine)
         {
             string policyText = passwordLine.Split(": ")[0];
-            MinOccurrences = int.Parse(policyText.Split(' ')[0].Split('-')[0]);
-            MaxOccurrences = int.Parse(policyText.Split(' ')[0].Split('-')[1]);
+            FirstOccurrenceIndex = int.Parse(policyText.Split(' ')[0].Split('-')[0]) - 1;
+            SecondOccurrenceIndex = int.Parse(policyText.Split(' ')[0].Split('-')[1]) - 1;
             Character = policyText.Split(' ')[1].First();
         }
 
         internal bool IsValid(string password)
-        {
-            int characterCount = password.Count(ch => ch.Equals(Character));
-            return characterCount >= MinOccurrences && characterCount <= MaxOccurrences;
-        }
+            => password[FirstOccurrenceIndex].Equals(Character) ^ password[SecondOccurrenceIndex].Equals(Character);
     }
 }
