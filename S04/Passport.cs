@@ -14,24 +14,29 @@ namespace S04
         // iyr (Issue Year)
         // pid (Passport ID)
 
-        private readonly List<string> _keys = new List<string>();
-        private readonly List<string> _mandatoryKeys = new List<string> { "byr", "ecl", "eyr", "hcl", "hgt", "iyr", "pid" };
-        private readonly Dictionary<string, string> _passportInfo = new Dictionary<string, string>();
+        internal Dictionary<string, string> PassportInfo { get; } = new Dictionary<string, string>();
 
         public Passport(string passportLine)
         {
             ParsePassportInfo(passportLine);
-            _keys = new List<string>(_passportInfo.Keys);
         }
 
         private void ParsePassportInfo(string passportLine)
         {
-            foreach (var keyvalue in passportLine.Split(' ').Where(keyvalue => !string.IsNullOrWhiteSpace(keyvalue)))
+            foreach (string kv in passportLine.Split(' ').Where(kv => !string.IsNullOrWhiteSpace(kv)))
             {
-                _passportInfo.Add(keyvalue.Split(':')[0], keyvalue.Split(':')[1]);
+                PassportInfo.Add(kv.Split(':')[0], kv.Split(':')[1]);
             }
         }
 
-        public bool IsValid => _mandatoryKeys.TrueForAll(key => _keys.Contains(key));
+        public bool IsValid =>
+            this.ContainsAllMandatoryKeys()
+            && this.IsBirthYearCorrect()
+            && this.IsExpirationYearCorrect()
+            && this.IsIssueYearCorrect()
+            && this.IsHeightCorrect()
+            && this.IsHairColorCorrect()
+            && this.IsEyeColorCorrect()
+            && this.IsPassportIdCorrect();
     }
 }
