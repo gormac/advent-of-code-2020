@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -37,9 +38,21 @@ namespace S06
             return lines;
         }
 
-        public static int GetSumOfAnswerCounts(IEnumerable<string> formsGroups)
+        public static int GetSumOfAnyoneAnsweredCounts(IEnumerable<string> formsGroups)
         {
             return formsGroups.Sum(g => g.ToCharArray().Where(c => c != ';').Distinct().Count());
+        }
+
+        public static int GetSumOfAllAnsweredCounts(IEnumerable<string> formsGroups)
+        {
+            var count = 0;
+            foreach (string formsGroup in formsGroups)
+            {
+                var distinctCharacters = formsGroup.ToCharArray().Where(c => c != ';').Distinct();
+                count += distinctCharacters.Count(c => formsGroup.Split(';', StringSplitOptions.RemoveEmptyEntries).All(form => form.Contains(c)));
+            }
+
+            return count;
         }
     }
 }

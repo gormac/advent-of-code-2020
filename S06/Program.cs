@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace S06
 {
@@ -8,8 +9,9 @@ namespace S06
         {
             Console.WriteLine("Show me those customs forms!");
 
-            var formsGroups = Helpers.GetCustomsFormsGroupsLines("forms.txt");
-            Console.WriteLine($"Sum of answer counts: {Helpers.GetSumOfAnswerCounts(formsGroups)}");
+            var formsGroups = Helpers.GetCustomsFormsGroupsLines("forms.txt").ToList();
+            Console.WriteLine($"Sum of anyone answered counts: {Helpers.GetSumOfAnyoneAnsweredCounts(formsGroups)}");
+            Console.WriteLine($"Sum of all answered counts: {Helpers.GetSumOfAllAnsweredCounts(formsGroups)}");
         }
     }
 }

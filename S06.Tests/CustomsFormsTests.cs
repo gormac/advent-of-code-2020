@@ -21,9 +21,15 @@ namespace S06.Tests
         }
 
         [Fact]
-        public void TestCustomsForms_Sum_Of_Answer_Count_Should_Be_11()
+        public void TestCustomsForms_Sum_Of_Anyone_Answered_Count_Should_Be_11()
         {
-            Helpers.GetSumOfAnswerCounts(_customsFormsGroups).Should().Be(11);
+            Helpers.GetSumOfAnyoneAnsweredCounts(_customsFormsGroups).Should().Be(11);
+        }
+
+        [Fact]
+        public void TestCustomsForms_Sum_Of_All_Answered_Count_Should_Be_6()
+        {
+            Helpers.GetSumOfAllAnsweredCounts(_customsFormsGroups).Should().Be(6);
         }
     }
 }
