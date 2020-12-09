@@ -20,5 +20,11 @@ namespace S07.Tests
             var bags = _rules.Select(rule => new Bag(rule)).ToList();
             bags.Count(b => b.CanHoldShinyGold(bags)).Should().Be(4);
         }
+
+        [Fact]
+        public void Shiny_Gold_TestBag_Should_Take_32_Bags_In_Total()
+        {
+            Helpers.ShinyGoldTotalBagCount().Should().Be(32);
+        }
     }
 }

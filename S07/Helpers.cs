@@ -17,8 +17,14 @@ namespace S07
         {
             if (!bag.CanHoldOtherBags) return false;
             return !bag.IsShinyGold 
-                   && bag.Rule.CanHold.Any(holding => bags.Any(b => b.BagName == holding.Key 
-                                                                    && (b.IsShinyGold || CanHoldShinyGold(b, bags))));
+                   && bag.Rule.CanHold.Any(holding => bags.Any(b => b.BagName == holding.Key && (b.IsShinyGold || CanHoldShinyGold(b, bags))));
+        }
+
+        public static int ShinyGoldTotalBagCount()
+        {
+            var shinyGoldBag = new Bag(Rules.Single(rule => rule.BagName == "shiny gold"));
+
+            return shinyGoldBag.SumOfBags(Rules);
         }
     }
 }
