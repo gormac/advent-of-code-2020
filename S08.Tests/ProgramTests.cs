@@ -9,7 +9,7 @@ namespace S08.Tests
         public void TestProgram_Accumulator_Should_Return_5()
         {
             int accumulator = Helpers.RunProgram();
-            accumulator.Should().Be(5);
+            accumulator.Should().Be(8);
         }
     }
 }
