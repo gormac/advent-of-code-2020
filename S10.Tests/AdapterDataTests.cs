@@ -21,6 +21,13 @@ namespace S10.Tests
         }
 
         [Fact]
+        public void TestChain_Adapter_Arrangement_Count_Should_Be_19208()
+        {
+            var chain = new Chain(_adapters);
+            chain.GetAdapterArrangementCount().Should().Be(19208);
+        }
+
+        [Fact]
         public void TestChain_Jolt_Count_Should_Be_22_10()
         {
             var chain = new Chain(_adapters);

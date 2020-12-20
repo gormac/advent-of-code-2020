@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+using System.Linq;
 
 namespace S10
 {
@@ -10,7 +10,20 @@ namespace S10
 
         public Chain(IEnumerable<int> adapters)
         {
-            _adapters = adapters.ToImmutableSortedSet();
+            _adapters = adapters;
+        }
+
+        public long GetAdapterArrangementCount()
+        {
+            var arrangementCounts = new Dictionary<int, long> { { 0, 1L } };
+            foreach (int adapter in _adapters.OrderBy(a => a).ToArray())
+            {
+                long count = arrangementCounts.Where(ac => ac.Key >= adapter - 3 && ac.Key <= adapter - 1).Sum(ac => ac.Value);
+                Console.WriteLine($"Adapter #{adapter} / Arrangement count {count}");
+                arrangementCounts.Add(adapter, count);
+            }
+            
+            return arrangementCounts.Last().Value;
         }
 
         public (int jolt1Count, int jolt3Count) GetJoltCount()
@@ -18,7 +31,7 @@ namespace S10
             var jolt1Count = 0;
             var jolt3Count = 0;
             var lastAdapter = 0;
-            foreach (var adapter in _adapters)
+            foreach (var adapter in _adapters.OrderBy(a => a).ToArray())
             {
                 switch (adapter - lastAdapter)
                 {
